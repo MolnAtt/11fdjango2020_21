@@ -10,7 +10,12 @@
     <h1>Hello vilag!</h1>
     
     <p>
-        Az a változó értéke {{ a }}.
+        Az a változó értéke 
+        {% if a > 100 %}
+            <span style="color:red">{{ a }}</span>
+        {% else %}
+            <span style="color:rgb(17, 0, 255)">{{ a }}</span>
+        {% endif %}
     </p>
 
     <p>

@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 def home_view(request, *args, **kwargs):
 	kontextus = {
-		"a": 123,
+		"a": 323,
 		"b": "blablabla",
 		"l": [1,3,5,7,9,300,123,123],
 	}
