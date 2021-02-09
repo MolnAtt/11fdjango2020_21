@@ -6,7 +6,7 @@ def home_view(request, *args, **kwargs):
 	kontextus = {
 		"a": 123,
 		"b": "blablabla",
-		"l": [1,3,5,7,9],
+		"l": [1,3,5,7,9,300,123,123],
 	}
 
 	print(f"A kontextusban az a értéke: {kontextus['a']}")
