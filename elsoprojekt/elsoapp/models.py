@@ -31,3 +31,4 @@ class Valasztas(models.Model):
 
 	def __str__(self):
 		return f"{self.tanulo.nev} -> {self.foglalkozas.nev}"
+
