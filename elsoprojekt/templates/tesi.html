@@ -16,19 +16,20 @@
     </header>
 
     <main>
-        <form>
+        <form method="POST">
+            {% csrf_token %} 
             <div class="grid-container">
                 <label for="fnev" class="grid-label">felhasználónév:</label>
-                <input type="text" name="" id="fnev">
+                <input type="text" name="felhasznalonev" id="fnev">
                 <label for="jelszo" class="grid-label">jelszó:</label>
-                <input type="password" name="" id="jelszo">
+                <input type="password" name="jelszo" id="jelszo">
                 <label for="valasztas" class="grid-label">választott foglalkozás:</label>
-                <select name="" id="valasztas">
-                    <option value="">Kosárlabda</option>
-                    <option value="">Gyeplabda</option>
-                    <option value="">Curling</option>
+                <select name="valasztas" id="valasztas">                    
+                    {% for foglalkozas in foglalkozasok %}
+                        <option value="{{ foglalkozas.nev }}">{{ foglalkozas.nev }}</option>
+                    {% endfor %}
                 </select>
-                <button>Küldés</button>
+                <button type="submit">Küldés</button>
             </div>
         </form>
     </main>

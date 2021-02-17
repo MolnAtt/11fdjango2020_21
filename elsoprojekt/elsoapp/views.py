@@ -22,5 +22,11 @@ def home_view(request, *args, **kwargs):
 	return render(request, "home.html", kontextus) 
 
 def tesijel(request):
-	kontextus = {}
+
+	if request.method =="POST":
+		print("POST request érkezet!!! :)")
+	
+
+	kontextus = {"foglalkozasok": Foglalkozas.objects.all()}
+
 	return render(request, "tesi.html", kontextus) 
