@@ -20,3 +20,7 @@ def home_view(request, *args, **kwargs):
 
 
 	return render(request, "home.html", kontextus) 
+
+def tesijel(request):
+	kontextus = {}
+	return render(request, "tesi.html", kontextus) 

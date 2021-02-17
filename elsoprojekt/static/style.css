@@ -1,0 +1,14 @@
+header{
+    background-color: red;
+}
+
+
+
+header, footer{
+    text-align: center;
+}
+
+main{
+    display:grid;
+    justify-content: center;
+}

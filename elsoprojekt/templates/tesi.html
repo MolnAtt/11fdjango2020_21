@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css'%} ">
+</head>
+<body>
+    <header>
+        Mindennapos testnevelésre való jelentkezés űrlapja.
+    </header>
+
+    <main>
+        <form action="">
+            <div class="grid-container">
+                <div class="grid-label">felhasználónév</div>
+                <div class="grid-item">tanulo</div>
+                <div class="grid-label">jelszó</div>
+                <div class="grid-item">szupertitkosjelszó</div>
+                <div class="grid-label">választott foglalkozás</div>
+                <div class="grid-item">Kosárlabda</div>
+                <button>Küldés</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        ha bármi gond adódik: <a href="mailto:molnar.attila@szlgbp.hu">molnar.attila@szlgbp.hu</a>
+    </footer>
+</body>
+</html>
