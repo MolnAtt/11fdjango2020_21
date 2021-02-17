@@ -11,4 +11,7 @@ header, footer{
 main{
     display:grid;
     justify-content: center;
+
+    grid-template-columns: 100px 100px;
+    grid-template-rows: repeat(4, 50px);
 }
