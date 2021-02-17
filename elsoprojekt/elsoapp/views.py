@@ -24,8 +24,7 @@ def home_view(request, *args, **kwargs):
 def tesijel(request):
 
 	if request.method =="POST":
-		print("POST request érkezet!!! :)")
-	
+		Valasztas.formrol(request.POST)
 
 	kontextus = {"foglalkozasok": Foglalkozas.objects.all()}
 

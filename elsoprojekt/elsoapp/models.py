@@ -31,3 +31,14 @@ class Valasztas(models.Model):
 
 	def __str__(self):
 		return f"{self.tanulo.nev} -> {self.foglalkozas.nev}"
+
+	def formrol(post):
+		print("POST request érkezet!!! :)")
+		print(f"A {post['felhasznalonev']} felhasználónevű tanuló a {post['jelszo']} jelszót beírva a {post['valasztas']} foglalkozást választaná")
+
+		tlista = list(Tanulo.objects.filter(fnev=post['felhasznalonev'], jelszo=post['jelszo']))
+		if len(tlista)==0:
+			print("sikertelen azonosítás!!!!!")
+		else:
+			fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0]
+			Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
