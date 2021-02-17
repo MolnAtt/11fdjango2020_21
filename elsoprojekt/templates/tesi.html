@@ -16,14 +16,18 @@
     </header>
 
     <main>
-        <form action="">
+        <form>
             <div class="grid-container">
-                <div class="grid-label">felhasználónév</div>
-                <div class="grid-item">tanulo</div>
-                <div class="grid-label">jelszó</div>
-                <div class="grid-item">szupertitkosjelszó</div>
-                <div class="grid-label">választott foglalkozás</div>
-                <div class="grid-item">Kosárlabda</div>
+                <label for="fnev" class="grid-label">felhasználónév:</label>
+                <input type="text" name="" id="fnev">
+                <label for="jelszo" class="grid-label">jelszó:</label>
+                <input type="password" name="" id="jelszo">
+                <label for="valasztas" class="grid-label">választott foglalkozás:</label>
+                <select name="" id="valasztas">
+                    <option value="">Kosárlabda</option>
+                    <option value="">Gyeplabda</option>
+                    <option value="">Curling</option>
+                </select>
                 <button>Küldés</button>
             </div>
         </form>
