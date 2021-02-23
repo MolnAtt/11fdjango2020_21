@@ -10,6 +10,10 @@ class Tanulo(models.Model):
 	jelszo = models.CharField(max_length=128)
 	email = models.CharField(max_length=128)
 
+	class Meta:
+		verbose_name = 'Tanuló'
+		verbose_name_plural = 'Tanulók'
+
 	def __str__(self):
 		return f"{self.nev} ({self.fnev} - {self.jelszo})"
 
@@ -21,13 +25,22 @@ class Tanulo(models.Model):
 
 class Foglalkozas(models.Model):
 	nev = models.CharField(max_length=128)
+	db = models.IntegerField()
+
+	class Meta:
+		verbose_name = 'Foglalkozás'
+		verbose_name_plural = 'Foglalkozások'
 
 	def __str__(self):
-		return f"{self.nev}"
+		return f"{self.nev} ({self.db})"
 
 class Valasztas(models.Model):
 	tanulo = models.ForeignKey(Tanulo, on_delete=models.CASCADE)
 	foglalkozas = models.ForeignKey(Foglalkozas, on_delete=models.CASCADE)
+
+	class Meta:
+		verbose_name = 'Választás'
+		verbose_name_plural = 'Választások'
 
 	def __str__(self):
 		return f"{self.tanulo.nev} -> {self.foglalkozas.nev}"
@@ -42,3 +55,7 @@ class Valasztas(models.Model):
 		else:
 			fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0]
 			Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
+
+
+
+
