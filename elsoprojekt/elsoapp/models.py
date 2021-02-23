@@ -25,14 +25,18 @@ class Tanulo(models.Model):
 
 class Foglalkozas(models.Model):
 	nev = models.CharField(max_length=128)
+	maxdb = models.IntegerField()
 	db = models.IntegerField()
+	
 
 	class Meta:
 		verbose_name = 'Foglalkozás'
 		verbose_name_plural = 'Foglalkozások'
 
 	def __str__(self):
-		return f"{self.nev} ({self.db})"
+		return f"{self.nev} ({self.db}/{self.maxdb})"
+	
+
 
 class Valasztas(models.Model):
 	tanulo = models.ForeignKey(Tanulo, on_delete=models.CASCADE)
@@ -59,3 +63,4 @@ class Valasztas(models.Model):
 
 
 
+		

@@ -26,7 +26,9 @@
                 <label for="valasztas" class="grid-label">választott foglalkozás:</label>
                 <select name="valasztas" id="valasztas">                    
                     {% for foglalkozas in foglalkozasok %}
-                        <option value="{{ foglalkozas.nev }}">{{ foglalkozas.nev }}</option>
+                        {% if foglalkozas.db > 0 %}
+                            <option value="{{ foglalkozas.nev }}">{{ foglalkozas }}</option>                            
+                        {% endif %}
                     {% endfor %}
                 </select>
                 <button type="submit">Küldés</button>
