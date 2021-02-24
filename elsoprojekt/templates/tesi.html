@@ -8,11 +8,16 @@
 
     {% load static %}
 
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'style.css'%} ">
+
 </head>
 <body>
     <header>
-        Mindennapos testnevelésre való jelentkezés űrlapja.
+        Jelentkezés testnevelésre
     </header>
 
     <main>
@@ -35,8 +40,12 @@
             </div>
         </form>
         
-        <div>
-            {{ mitortent }}
+        <div class="uzenetek">
+            
+            {% for uzi in mitortent %}
+                <p class="uzenet"> {{ uzi }} </p>
+            {% endfor %}
+                
         </div>
     </main>
 

@@ -57,40 +57,55 @@ class Valasztas(models.Model):
 
 		tlista = list(Tanulo.objects.filter(fnev=post['felhasznalonev'], jelszo=post['jelszo']))
 
-		uzenetek = ""
+		uzenetek = []
 
 		if not Tanulo.azonositas(post['felhasznalonev'], post['jelszo']):
 			print("sikertelen azonosítás!")
-			uzenetek += "Hibás a felhasználónév vagy a jelszó!"
+			uzenetek.append("Hibás a felhasználónév vagy a jelszó!")
 			return uzenetek
 
+		diak = tlista[0]
+
 		print("sikeres azonosítás.")
-		uzenetek += "Sikeresen azonosítottuk a felhasználót."
+		uzenetek.append("Sikeresen azonosítottuk a felhasználót.")
 
 		fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0] # ez a választott foglalkozás
-		if	fogl.db>0:
-			print('jelentkezés sikeres!')
-			uzenetek += 'jelentkezés sikeres!'
-			Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
-			# v = Valasztas(tanulo=tlista[0], foglalkozas=fogl)
-			# v.save()
+		if	fogl.db <= 0:
+			print('jelentkezés sikertelen')
+			uzenetek.append('jelentkezés sikertelen, mert közben már elvitték a helyet!')
+			return uzenetek
+
+		print('jelentkezés sikeres!')
+		uzenetek.append('jelentkezés sikeres!')
+
+
+		valasztasszures = Valasztas.objects.filter(tanulo=diak)
+
+		if valasztasszures.count()>0:		
+			regivalasztasa = list(valasztasszures)[0]
+			regivalasztasa.foglalkozas.db+=1
+			regivalasztasa.foglalkozas.save()
+			regivalasztasa.foglalkozas = fogl
 			fogl.db-=1
 			fogl.save()
-		else:
-			print('jelentkezés sikertelen')
-			uzenetek += 'jelentkezés sikertelen, mert közben már elvitték a helyet!'
+			regivalasztasa.save()
+			print("foglalkozás sikeresen módosítva")
+			uzenetek.append("foglalkozás sikeresen módosítva")
+			return uzenetek
 
+		# sikeres azonosítás, van szabad hely, első választás esetén 
+		Valasztas.objects.create(tanulo=diak, foglalkozas=fogl)
+		fogl.db-=1
+		fogl.save()
+		print('első választás rögzítve')
+		uzenetek.append("választás rögzítve (első választás, módosítás nem történt)")
 		return uzenetek
-
 
 
 
 
 # teendők:
 
-# Átjelentkezés:
-# - Egy diák ne tudjon két foglalkozásra jelentkezni!
-# - Az új jelentkezés írja felül a régit! (hogy ne kelljen jelentkezéstörléssel bajlódni)
-# - Ha valaki így tesz, akkor az átjelentkezés tényét írja ki a felhasználónak!
-
 # - ha az admin site-on keresztül törölnek egy választást, akkor a szabad helyek száma is frissüljön! desktruktorokkal kell játszani majd.
+# - Elég lenne egy függvény, ami szinkronizálja a db számokat a választások alapján, és ezt meg lehessen hívni admin site-ról.
+

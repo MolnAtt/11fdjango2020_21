@@ -23,9 +23,9 @@ def home_view(request, *args, **kwargs):
 
 def tesijel(request):
 
-	mitortent = ""
+	mitortent = []
 	if request.method =="POST":
-		mitortent += Valasztas.formrol(request.POST)
+		mitortent = Valasztas.formrol(request.POST)
 
 	kontextus = {"foglalkozasok": Foglalkozas.objects.all(), "mitortent": mitortent}
 
