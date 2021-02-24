@@ -23,6 +23,9 @@ class Tanulo(models.Model):
 				tan = t.split('\t')
 				Tanulo.objects.create(nev = tan[0], fnev=tan[1], jelszo = tan[2], email=tan[3])
 
+	def azonositas(fn, j):
+		return Tanulo.objects.filter(fnev=fn, jelszo=j).count()!=0
+
 class Foglalkozas(models.Model):
 	nev = models.CharField(max_length=128)
 	maxdb = models.IntegerField()
@@ -53,21 +56,36 @@ class Valasztas(models.Model):
 		print(f"A {post['felhasznalonev']} felhasználónevű tanuló a {post['jelszo']} jelszót beírva a {post['valasztas']} foglalkozást választaná")
 
 		tlista = list(Tanulo.objects.filter(fnev=post['felhasznalonev'], jelszo=post['jelszo']))
-		if len(tlista)==0:
-			print("sikertelen azonosítás!!!!!")
-		else:
-			fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0]
-			Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
+
+		uzenetek = ""
+
+		if not Tanulo.azonositas(post['felhasznalonev'], post['jelszo']):
+			print("sikertelen azonosítás!")
+			uzenetek += "Hibás a felhasználónév vagy a jelszó!"
+			return uzenetek
+
+		print("sikeres azonosítás.")
+		uzenetek += "Sikeresen azonosítottuk a felhasználót."
+		fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0]
+		Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
+		return uzenetek
+
 
 
 
 
 # teendők:
+
+# AZONOSÍTÁS - felhasználónév-jelszó
 # - Ha sikertelen azonosítás történik, írja ezt ki a felhasználónak!
 # - Ha sikeres azonosítás történik, írja ezt ki a felhasználónak!
+
+# Létszám-Check
 # - Ne lehessen létszámon felül jelentkezni!
 # - Ha már elvitték közben a helyet, írja ezt ki a felhasználónak!
 # - Ha sikeres jelentkezés történt, akkor írja ezt ki a felhasználónak!
+
+# Átjelentkezés:
 # - Egy diák ne tudjon két foglalkozásra jelentkezni!
 # - Az új jelentkezés írja felül a régit! (hogy ne kelljen jelentkezéstörléssel bajlódni)
 # - Ha valaki így tesz, akkor az átjelentkezés tényét írja ki a felhasználónak!
