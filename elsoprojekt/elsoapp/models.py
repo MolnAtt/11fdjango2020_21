@@ -66,8 +66,20 @@ class Valasztas(models.Model):
 
 		print("sikeres azonosítás.")
 		uzenetek += "Sikeresen azonosítottuk a felhasználót."
-		fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0]
-		Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
+
+		fogl = list(Foglalkozas.objects.filter(nev=post['valasztas']))[0] # ez a választott foglalkozás
+		if	fogl.db>0:
+			print('jelentkezés sikeres!')
+			uzenetek += 'jelentkezés sikeres!'
+			Valasztas.objects.create(tanulo=tlista[0], foglalkozas=fogl)
+			# v = Valasztas(tanulo=tlista[0], foglalkozas=fogl)
+			# v.save()
+			fogl.db-=1
+			fogl.save()
+		else:
+			print('jelentkezés sikertelen')
+			uzenetek += 'jelentkezés sikertelen, mert közben már elvitték a helyet!'
+
 		return uzenetek
 
 
@@ -76,16 +88,9 @@ class Valasztas(models.Model):
 
 # teendők:
 
-# AZONOSÍTÁS - felhasználónév-jelszó
-# - Ha sikertelen azonosítás történik, írja ezt ki a felhasználónak!
-# - Ha sikeres azonosítás történik, írja ezt ki a felhasználónak!
-
-# Létszám-Check
-# - Ne lehessen létszámon felül jelentkezni!
-# - Ha már elvitték közben a helyet, írja ezt ki a felhasználónak!
-# - Ha sikeres jelentkezés történt, akkor írja ezt ki a felhasználónak!
-
 # Átjelentkezés:
 # - Egy diák ne tudjon két foglalkozásra jelentkezni!
 # - Az új jelentkezés írja felül a régit! (hogy ne kelljen jelentkezéstörléssel bajlódni)
 # - Ha valaki így tesz, akkor az átjelentkezés tényét írja ki a felhasználónak!
+
+# - ha az admin site-on keresztül törölnek egy választást, akkor a szabad helyek száma is frissüljön! desktruktorokkal kell játszani majd.
