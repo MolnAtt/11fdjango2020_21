@@ -37,7 +37,6 @@ class Foglalkozas(models.Model):
 		return f"{self.nev} ({self.db}/{self.maxdb})"
 	
 
-
 class Valasztas(models.Model):
 	tanulo = models.ForeignKey(Tanulo, on_delete=models.CASCADE)
 	foglalkozas = models.ForeignKey(Foglalkozas, on_delete=models.CASCADE)
@@ -63,4 +62,12 @@ class Valasztas(models.Model):
 
 
 
-		
+# teendők:
+# - Ha sikertelen azonosítás történik, írja ezt ki a felhasználónak!
+# - Ha sikeres azonosítás történik, írja ezt ki a felhasználónak!
+# - Ne lehessen létszámon felül jelentkezni!
+# - Ha már elvitték közben a helyet, írja ezt ki a felhasználónak!
+# - Ha sikeres jelentkezés történt, akkor írja ezt ki a felhasználónak!
+# - Egy diák ne tudjon két foglalkozásra jelentkezni!
+# - Az új jelentkezés írja felül a régit! (hogy ne kelljen jelentkezéstörléssel bajlódni)
+# - Ha valaki így tesz, akkor az átjelentkezés tényét írja ki a felhasználónak!
